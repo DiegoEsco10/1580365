@@ -41,6 +41,7 @@ conn = create_con('test1.cogsvkqpg7tp.us-east-2.rds.amazonaws.com', 'DiegoE', 'p
 cursor = conn.cursor()
 
 
+# Shows main menu for database
 def show_menu():
     print("a - Add car")
     print("d - Remove car")
@@ -50,6 +51,7 @@ def show_menu():
     print("q- Quit")
 
 
+# Adding Car option
 def add_car():
     car_make = input('Enter car make:')
     car_model = input('Enter car model:')
@@ -59,12 +61,13 @@ def add_car():
                    (car_make, car_model, car_year, car_color))
     conn.commit()
     query = 'SELECT * FROM Garage WHERE id=(SELECT max(id) FROM Garage)'
-    cursor.execute(query,)
+    cursor.execute(query, )
     print('New Record added:')
     for i in cursor:
         print(i)
 
 
+# Removing Car option
 def remove_car():
     cursor.execute('SELECT * FROM Garage')
     for i in cursor:
@@ -77,6 +80,7 @@ def remove_car():
     print("Total rows deleted: %d" % cursor.rowcount)
 
 
+# Updating car make
 def update_car_make(id):
     query = "SELECT * FROM Garage WHERE id = %s "
     data = (id,)
@@ -96,6 +100,7 @@ def update_car_make(id):
     conn.commit()
 
 
+# Updating Car model 
 def update_car_model(id):
     query = 'SELECT * FROM Garage WHERE id = %s '
     data = (id,)
@@ -115,6 +120,7 @@ def update_car_model(id):
     conn.commit()
 
 
+# Updating Car year 
 def update_car_year(id):
     query = "SELECT * FROM Garage WHERE id = %s "
     data = (id,)
@@ -138,6 +144,7 @@ def update_car_year(id):
     conn.commit()
 
 
+# Updating Car color
 def update_car_color(id):
     query = "SELECT * FROM Garage WHERE id = %s "
     data = (id,)
@@ -157,6 +164,7 @@ def update_car_color(id):
     conn.commit()
 
 
+# Updating all of Car entities
 def update_car_all(id):
     query = "SELECT * FROM Garage WHERE id = %s "
     data = (id,)
@@ -180,6 +188,7 @@ def update_car_all(id):
     conn.commit()
 
 
+# Options Menu for updating cars entities
 def update_car_menu():
     cursor.execute('SELECT * FROM Garage')
     for i in cursor:
@@ -214,12 +223,14 @@ def update_car_menu():
             print("That is not a valid choice. You can only choose from the menu.")
 
 
+# sorts car by year in ascending
 def sorted_car():
     cursor.execute('SELECT * FROM Garage ORDER BY year ASC ')
     for i in cursor:
         print(i)
 
 
+# Car is sorted by color
 def sorted_by_color():
     cursor.execute('SELECT DISTINCT color FROM Garage')
     for i in cursor:
@@ -227,7 +238,7 @@ def sorted_by_color():
     user_color_pick = input('Please enter color:')
     if type(user_color_pick) == str:
         query = "SELECT * FROM Garage WHERE color = '\{}\'".format(user_color_pick)
-        cursor.execute(query,)
+        cursor.execute(query, )
         for i in cursor:
             print(i)
     else:
@@ -236,6 +247,7 @@ def sorted_by_color():
     conn.commit()
 
 
+# Menu option parameters for input
 def menu():
     """
     This is the main method, I call it main by convention.
